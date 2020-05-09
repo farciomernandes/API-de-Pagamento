@@ -1,7 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import Stripe from 'stripe';
-
+import CheckoutButton from '../components/CheckoutButton';
 
 import stripeConfig from '../config/stripe';
 
@@ -55,9 +54,12 @@ function Product({ sku }){ //Função de retorno utilizando as infos
             style={{
                 width:'200px'
             }} />}
-
             <h3>{Number(sku.price/100).toFixed(2)} {sku.currency.toUpperCase()}</h3>
-            <Link href="/"> Voltar </Link>
+
+            <CheckoutButton skuId={sku.id} itemName={sku.attributes.name} />
+            
+            <br /> <br />
+            <a href="/"> Voltar </a>
         </div>
     )
 }

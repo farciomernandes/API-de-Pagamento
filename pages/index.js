@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import Link from 'next/link';
 import stripeConfig from '../config/stripe';
 
 export async function getStaticProps(){ //Função que realiza a busca de dados no stripe
@@ -17,13 +16,13 @@ export async function getStaticProps(){ //Função que realiza a busca de dados 
 }
 
 function Home({ skus }) {
-  console.log(skus)
   return ( // <> = Fragment
     <> 
       <h1>Simple Stripe Store</h1>
+      <hr/>
 
       {skus.map(sku =>( //Map retornando uma JSX
-        <div>
+        <div key={sku.id}>
            <h2>{sku.attributes.name}</h2>
 
             {sku.image && <img src={sku.image}
@@ -32,7 +31,7 @@ function Home({ skus }) {
             }} />}
 
             <h3>{Number(sku.price/100).toFixed(2)} {sku.currency.toUpperCase()}</h3>
-            <Link href={`/${sku.id}`}> Ver item </Link>
+            <a href={`/${sku.id}`}> Ver item </a>
 
 
           <hr />

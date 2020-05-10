@@ -7,22 +7,25 @@ import stripeConfig from '../config/stripe'; //Importando nossas stripes
 const stripePromise = loadStripe(stripeConfig.publicKey); //Chave publica adicionada da nossa stripe
 
 
-function CheckoutButton( { skuId, itemName } ) { //Recebe o produto junto com ID e nome
+function CheckoutButton( { skuId, itemName } ) { //Recebe o produto junto com ID e 
   async function handleClick() {
+
+    
+    console.log('skuId = ', skuId)
+    console.log('itemName = ',itemName)
     console.log('ENTREI NO handleClick')
 
     const stripe = await stripePromise;
-
+    console.log('PASSEI DA AWAIT STRIPEPROMISE')
+    
     const { error } = await stripe.redirectToCheckout({
-      items: [ {sku: 'skuId', quantity: 1} ],
-      successUrl: `http://localhost:3000/sucess?itemName=${itemName}`,
-      cancelUrl: `http://localhost:3000/cancel`,
+      items: [{ sku: skuId , quantity: 1 }],
+      successUrl: `https://localhost:3000/success?itemName=${itemName}`,
+      cancelUrl: 'http://localhost:3000/cancel',
     });
-
+    console.log('PASSAMOS DO STRIPE.REDIRECT')
     if(error){
-      console.log(error);
-    }else{
-      console.log('NÃO EXISTE ERRO!')
+      console.log('ERRO MEU PARCEIRO: ', error);
     }
     
   };
